@@ -5,16 +5,17 @@ import com.stackroute.movieservice.exception.UserAlreadyexists;
 import com.stackroute.movieservice.exception.UserNotExists;
 import com.stackroute.movieservice.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-@Qualifier("implementation1")
+
 @Service
 public class MovieServiceImpl implements MovieService{
     @Autowired
     private MovieRepository movieRepository;
+
+
     public Movie saveMovie(Movie movie) throws UserAlreadyexists {
         if(movieRepository.existsById(movie.getId())){
             throw new UserAlreadyexists("user not found");

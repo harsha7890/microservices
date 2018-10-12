@@ -6,13 +6,13 @@ import com.stackroute.movieservice.exception.UserNotExists;
 import com.stackroute.movieservice.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Primary;
 
 import java.util.ArrayList;
 import java.util.List;
-@Qualifier("implementation1")
-@Service
-public class MovieServiceImpl implements MovieService{
+@Primary
+@Qualifier("Implementation2")
+public class MovieServiceImpl2 implements MovieService{
     @Autowired
     private MovieRepository movieRepository;
     public Movie saveMovie(Movie movie) throws UserAlreadyexists {
@@ -28,17 +28,17 @@ public class MovieServiceImpl implements MovieService{
 
         List<Movie> listmovies = (List)movieRepository.findAll();
 
-         return listmovies;
+        return listmovies;
 
     }
-    public Movie updateComment(int id,String newComment) throws UserNotExists{
+    public Movie updateComment(int id,String newComment) throws UserNotExists {
         List<Movie> movieList = movieList();
         int j=0;
         if(!movieRepository.existsById(id)){
             throw new UserNotExists("user not found");
         }
         else {
-        for(int i=0;i<movieList.size();i++){
+            for(int i=0;i<movieList.size();i++){
                 if (movieList.get(i).getId()==id) {
                     movieList.get(i).setComments(newComment);
                     movieRepository.save(movieList.get(i));
@@ -65,21 +65,21 @@ public class MovieServiceImpl implements MovieService{
     }
 
     public List<Movie> searchMovie(String movies) throws UserNotExists {
-       List<Movie> listMovies = movieList();
-       List<Movie> searchmovie= new ArrayList<>();
-       int j=-1;
-       for(int i=0;i<listMovies.size();i++){
-               if(listMovies.get(i).getMovie().equals(movies)){
-                   searchmovie.add(listMovies.get(i));
-                   j=i;
-               }
-       }
-       if(j==-1){
-           throw new UserNotExists("user not found");
-       }
-       else{
-           return searchmovie;
-       }
+        List<Movie> listMovies = movieList();
+        List<Movie> searchmovie= new ArrayList<>();
+        int j=-1;
+        for(int i=0;i<listMovies.size();i++){
+            if(listMovies.get(i).getMovie().equals(movies)){
+                searchmovie.add(listMovies.get(i));
+                j=i;
+            }
+        }
+        if(j==-1){
+            throw new UserNotExists("user not found");
+        }
+        else{
+            return searchmovie;
+        }
 
     }
 //    public List<Movie> searchByMovieQuery(String movie){

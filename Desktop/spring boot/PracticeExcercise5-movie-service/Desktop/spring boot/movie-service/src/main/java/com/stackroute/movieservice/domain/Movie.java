@@ -1,16 +1,12 @@
 package com.stackroute.movieservice.domain;
 
-//import org.hibernate.mapping.Collection;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.NotNull;
-
-
-@Document(collection="test")
+@Document(collection="movies")
 public class Movie {
     @Id
-    @NotNull
     private int id;
     private String movie;
     private String comments;

@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+ mongo:
+   image:  mongo:3.2-jessie
+   ports:
+     -  "27017:27017"
+   container_name:  mongo-docker
+   network_mode:  host
+   volumes:
+     - '/Desktop/data/mysql:/data/db'
+
+ movie-app:
+   image:  movie-app:v03
+   build:  movie-service/
+   restart:  always
+   network_mode:  host
+   container_name:  spring-docker
+   depends_on:
+     -  mongo
+   ports:
+     -  8090:8080
+   expose:
+     -  8080
