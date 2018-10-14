@@ -10,7 +10,7 @@ services:
       - '/Desktop/data/mysql:/data/db'
 
   spring:
-    image:  movie-app_service:v01
+    image:  movie-app_server:v02
     build:  movie-service/
     restart:  always
     network_mode:  host
@@ -23,19 +23,21 @@ services:
       -  8080
 
   config:
-    image: config-server:v03
+    image: config-server:v01
     restart: always
+    ports:
+      - 8891:8891
     
   registry:
-    image: eureka-server:v03
+    image: eureka-server:v01
     restart: always
     depends_on:
       - config
     ports:
-      - 9090:9090
+      - 8888:8888
 
   gateway:
-    image: apigateway-server:v03
+    image: apigateway:v01
     restart: always
     depends_on:
       - config
